@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info
+.pytest_cache
+.ipynb_checkpoints
+
+thumbs.db
+.DS_Store
+.idea
+*.log
+*rtx*
+*.pdf
+*.mkv
+*.mp4
+*a40*
+*durip*

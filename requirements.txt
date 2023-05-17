@@ -1,0 +1,13 @@
+numpy
+torch==1.13.1
+torchaudio
+tqdm
+more-itertools
+transformers>=4.19.0
+ffmpeg-python==0.2.0
+opencc
+jieba
+editdistance
+pandas
+inflect
+sacrebleu
