@@ -6,7 +6,7 @@ export CUDA_VISIBLE_DEVICES=2
 
 dataset="seame"
 model="tiny"
-dataset_dir="/data/scratch/pyp/exp_pyp/whisper/seame/seame/data"
+dataset_dir="path/to/seame/seame/data"
 core_metric="mer"
 split="valid" # for seame, it should be valid, devsge or devman, the later two are usually treated as test set in the literature
 single_lang_threshold=1

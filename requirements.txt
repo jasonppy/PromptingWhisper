@@ -1,6 +1,7 @@
 numpy
 torch==1.13.1
-torchaudio
+torchaudio==0.13.1
+torchvision==0.14.1
 tqdm
 more-itertools
 transformers>=4.19.0
@@ -11,3 +12,7 @@ editdistance
 pandas
 inflect
 sacrebleu
+profanityfilter
+ftfy 
+regex
+av

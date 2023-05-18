@@ -164,7 +164,7 @@ def get_dataloader(args):
     print("dataset size: ", len(dataset))
     loader = torch.utils.data.DataLoader(dataset, 
                         batch_size=args.batch_size, 
-                        drop_last=True, shuffle=True, num_workers=args.num_workers,
+                        drop_last=False, shuffle=False, num_workers=args.num_workers,
                         collate_fn=dataset.collate, persistent_workers=True
                         )
 

@@ -163,8 +163,8 @@ if __name__ == "__main__":
 
     
     inference_metrics, (wer_list, processed_preds, processed_refs) = calc_metrics()(refs, preds)
-    print("validation results with the best val model:", inference_metrics)
-    print("validation results with the best val model:", inference_metrics)
+    print("results:", inference_metrics)
+    print("results:", inference_metrics)
     # in the case of speech translation, the metric is actually BLUE score
     if args.topk > 0:
         import numpy as np
@@ -182,5 +182,5 @@ if __name__ == "__main__":
                 print("ref: ", k)
                 print("pred: ", v)
     
-    print("validation results with the best val model:", inference_metrics)
-    print("validation results with the best val model:", inference_metrics)
+    print("results:", inference_metrics)
+    print("results:", inference_metrics)

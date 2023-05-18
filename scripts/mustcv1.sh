@@ -6,8 +6,8 @@ export CUDA_VISIBLE_DEVICES=2
 
 dataset="mustcv1"
 model="tiny"
-dataset_dir="/data3/scratch/pyp/exp_pyp/whisper/mustcv1"
-core_metric="mer"
+dataset_dir="path/to/mustcv1"
+core_metric="bleu"
 split="dev"
 language="ru"
 logit_mask=${language}

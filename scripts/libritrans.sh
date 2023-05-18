@@ -6,8 +6,8 @@ export CUDA_VISIBLE_DEVICES=2
 
 dataset="libritrans"
 model="tiny"
-dataset_dir="/data3/scratch/pyp/exp_pyp/whisper/libritrans"
-core_metric="mer"
+dataset_dir="path/to/libritrans"
+core_metric="bleu"
 split="dev"
 language="fr"
 logit_mask=${language}

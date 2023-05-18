@@ -6,8 +6,8 @@ export CUDA_VISIBLE_DEVICES=2
 
 dataset="covost2"
 model="tiny"
-dataset_dir="/data/scratch/pyp/exp_pyp/whisper/covost2"
-core_metric="mer"
+dataset_dir="path/to/covost2"
+core_metric="bleu"
 split="dev"
 language="de"
 logit_mask=${language}

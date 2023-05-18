@@ -6,7 +6,7 @@ export CUDA_VISIBLE_DEVICES=2
 
 dataset="ascend"
 model="tiny"
-dataset_dir="/data/scratch/pyp/exp_pyp/whisper/ascend/ASCEND"
+dataset_dir="path/to/ascend/ASCEND"
 split="dev"
 core_metric="mer"
 single_lang_threshold=0.9

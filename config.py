@@ -10,8 +10,8 @@ def MyParser():
     parser.add_argument("--batch_size", type=int, default=64, help="this is just for dataloader, the model forward is still with batch size == 1")
     parser.add_argument("--sample_rate", type=int, default=16000, help='target sample rate needs to be 16000 (fixed by whisper), if audio native sample is not this, will resample')
     parser.add_argument("--audio_max_length", type=int, default=480000, help="30sec * 16000, input needs to be of length 30 sec. (needs mask if not, don't know what result would be), don't have to be anymore")
-    parser.add_argument("--text_max_length", type=int, default=120, help='whisper default is 448, but this should not have an impact on acc, but only on memory')
-    parser.add_argument("--padding_idx", type=int, default=-100)
+    parser.add_argument("--text_max_length", type=int, default=120, help='this is not used')
+    parser.add_argument("--padding_idx", type=int, default=-100, help="this is not used")
 
     parser.add_argument("--model", type=str, choices=['tiny', 'tiny.en', 'base', 'base.en', 'small', 'small.en', 'medium', 'medium.en', 'large', 'largev2'])
     parser.add_argument("--whisper_root", type=str, default="/saltpool0/scratch/pyp/whisper/pretrained_models")
@@ -28,6 +28,16 @@ def MyParser():
     parser.add_argument("--concat_lang_token", type=int, default=0, help="if true, will use both two language tokens for the code switching input")
     parser.add_argument("--logit_mask", type=str, default="0", help="if not None, mask out the output logit to contraint the output vocabulary, currently might only support zh")
     parser.add_argument("--vocab_cap", type=float, default=0.7, help="for speech translation for now, only allow to generate tokens that has top vocab_cap frequency in the training set")
+
+    # AVSR specific
+    parser.add_argument("--socratic", type=str, default="0", help="whether use clip to detect place and object, and input them in the prompt of the decoder, 0 means no, 1 means yes. the name socratic comes from https://arxiv.org/abs/2204.00598")
+    parser.add_argument("--num_img", type=int, default=3, help="number of images we sample from the video, which are later used for CLIP places and objects detection")
+    parser.add_argument("--place_topk", type=int, default=0, help="we find it to be unhelpful")
+    parser.add_argument("--obj_topk", type=int, default=50, help="a surprisingly large amount of obj can be very helpful")
+    parser.add_argument("--object_txt_fn", type=str, default='/data/scratch/pyp/exp_pyp/whisper/place_and_object/dictionary_and_semantic_hierarchy.txt', help="this is downloaded")
+    parser.add_argument("--place_txt_fn", type=str, default='/data/scratch/pyp/exp_pyp/whisper/place_and_object/categories_places365.txt', help="this is downloaded")
+    parser.add_argument("--object_pkl_fn", type=str, default="/data/scratch/pyp/exp_pyp/whisper/place_and_object/tencent_336.pkl", help="CLIP embedding of tencent objects text, if not exist, running avsr.py will automatically run CLIP embedding on the downloaded txt, and store the results")
+    parser.add_argument("--place_pkl_fn", type=str, default="/data/scratch/pyp/exp_pyp/whisper/place_and_object/places365_336.pkl", help="CLIP embedding of places365 text, if not exist, running avsr.py will automatically run CLIP embedding on the downloaded txt, and store the results")
     
 
 
