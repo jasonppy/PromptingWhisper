@@ -1,7 +1,7 @@
 
 # Prompting the Hidden Talent of Web-Scale Speech Models for Zero-Shot Task Generalization
 This is the official codebase for paper [Prompting the Hidden Talent of Web-Scale Speech Models
-for Zero-Shot Task Generalization](https://github.com/jasonppy/PromptingWhisper).
+for Zero-Shot Task Generalization](https://arxiv.org/abs/2305.11095).
 
 ```
 @inproceedings{peng2023whisper,

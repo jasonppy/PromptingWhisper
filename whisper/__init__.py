@@ -25,7 +25,8 @@ _MODELS = {
     "medium.en": "https://openaipublic.azureedge.net/main/whisper/models/d7440d1dc186f76616474e0ff0b3b6b879abc9d1a4926b7adfa41db2d497ab4f/medium.en.pt",
     "medium": "https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt",
     "large": "https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt",
-    "largev2": "https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt"
+    "largev2": "https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt",
+    "large-v2": "https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt"
 }
 
 
@@ -67,7 +68,7 @@ def available_models() -> List[str]:
     return list(_MODELS.keys())
 
 
-def load_model(name: str, device: Optional[Union[str, torch.device]] = None, download_root: str = "/data/scratch/pyp/exp_pyp/whisper/pretrained_models", in_memory: bool = False) -> Whisper:
+def load_model(name: str, device: Optional[Union[str, torch.device]] = None, download_root: str = None, in_memory: bool = False) -> Whisper:
     """
     Load a Whisper ASR model
 
@@ -96,25 +97,13 @@ def load_model(name: str, device: Optional[Union[str, torch.device]] = None, dow
             "XDG_CACHE_HOME", 
             os.path.join(os.path.expanduser("~"), ".cache", "whisper")
         )
-    print("load model from ", download_root)
-    if not os.path.isdir(download_root):
-        download_root = "/data3/scratch/pyp/exp_pyp/whisper/pretrained_models"
-        print("actually, trying load model from ", download_root)
-    if not os.path.isdir(download_root):
-        download_root = "/saltpool0/scratch/pyp/whisper/pretrained_models"
-        print("actually, trying load model from ", download_root)
-    if not os.path.isdir(download_root):
-        download_root = "/scratch/cluster/pyp/exp_pyp/whisper/pretrained_models"
-        print("actually, trying load model from ", download_root)
-    if not os.path.isdir(download_root):
-        raise RuntimeError
+    print("model weights is downloaded to ", download_root)
     if name in _MODELS:
         checkpoint_file = _download(_MODELS[name], download_root, in_memory)
     elif os.path.isfile(name):
         checkpoint_file = open(name, "rb").read() if in_memory else name
     else:
         raise RuntimeError(f"Model {name} not found; available models = {available_models()}")
-
     with (io.BytesIO(checkpoint_file) if in_memory else open(checkpoint_file, "rb")) as fp:
         checkpoint = torch.load(fp, map_location=device)
     del checkpoint_file
