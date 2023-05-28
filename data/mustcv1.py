@@ -139,7 +139,7 @@ class MuSTCV1Dataset(torch.utils.data.Dataset):
 
 
 def get_dataloader(args):
-    tokenizer =  whisper.tokenizer.get_tokenizer(multilingual=True, language="zh", task=args.task)
+    tokenizer =  whisper.tokenizer.get_tokenizer(multilingual=True, language=args.language, task=args.task)
     dataset = MuSTCV1Dataset(args, "dev" if args.data_split in ['dev', 'val'] else "test", args.sample_rate) # split doesn't make a difference, will always on tst-COMMON, as we are not tuning any hyperparam on this dataset
     print("dataset size: ", len(dataset))
     loader = torch.utils.data.DataLoader(dataset, 
