@@ -19,7 +19,7 @@ exp_name="${model}_placesk${pk}_objectk${ok}"
 python ../avsr.py \
 --place_topk $pk \
 --obj_topk $ok \
---socratic "1" \
+--socratic $socratic \
 --language "en" \
 --num_img ${num_img} \
 --model ${model} \

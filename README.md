@@ -47,6 +47,8 @@ cd scripts
 bash visspeech.sh
 ```
 
+NOTE: we observe that if your downloaded videos are of a lower quality, CLIP could perform worse on retrieving visual prompts, which leads to higher WER. Therefore we recommend downloading the videos in as high resolution as possible. Our video downloading setting (for [yt-dlp](https://github.com/yt-dlp/yt-dlp)) is `bestvideo[height<=720]+bestaudio/best[height<=720]` and in `.mkv` format. We use [David Xu's code](https://github.com/DavidXu9000/yt-dl) for downloading
+
 # 3. Code Switched Speech Recognition
 For code-switched speech recognition (CS-ASR) we use [ASCEND](https://arxiv.org/abs/2112.06223) and [SEAME](https://www.isca-speech.org/archive/pdfs/interspeech_2010/lyu10_interspeech.pdf). ASECEND can be obtained following the [official codebase](https://github.com/HLTCHKUST/ASCEND), and SEAME can be obtained through LDC [here](https://catalog.ldc.upenn.edu/LDC2015S04).
 
