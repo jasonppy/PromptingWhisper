@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
     ###################################
 
-    tokenizer, loader = get_dataloader(args)
+    loader = get_dataloader(args)
 
     model = whisper.load_model(args.model)
     model.eval()

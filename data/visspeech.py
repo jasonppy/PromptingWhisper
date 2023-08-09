@@ -74,7 +74,6 @@ class VisSpeechDataset(torch.utils.data.Dataset):
         self.split = split
         self.args = args
         self.sample_rate = sample_rate
-        self.tokenizer =  whisper.tokenizer.get_tokenizer(False if "en" not in args.model else True, language="en", task="transcribe")
         self.data = []
         with open(Path(args.dataset_dir)/"VisSpeech.csv", "r") as file:
             csv_file = csv.reader(file)
@@ -137,7 +136,6 @@ class VisSpeechDataset(torch.utils.data.Dataset):
 
 
 def get_dataloader(args):
-    tokenizer =  whisper.tokenizer.get_tokenizer(multilingual=False if "en" not in args.model else True, language="en", task=args.task)
     dataset = VisSpeechDataset(args, "test", args.sample_rate) # there is only one split, only test
     print("dataset size: ", len(dataset))
     loader = torch.utils.data.DataLoader(dataset, 
@@ -146,4 +144,4 @@ def get_dataloader(args):
                         collate_fn=dataset.collate, persistent_workers=True
                         )
 
-    return tokenizer, loader
+    return loader
