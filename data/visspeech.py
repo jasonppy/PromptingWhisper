@@ -1,6 +1,6 @@
 from pathlib import Path
 import numpy as np
-
+import os
 
 import torch
 import whisper
@@ -33,7 +33,7 @@ class calc_metrics:
             processed_preds.append(pred)
             processed_refs.append(ref) # do not process ref
             cur_dist =editdistance.distance(pred, ref)
-            cur_tokens = len(ref)
+            cur_tokens = len(ref.split(" "))
             wer_list.append(cur_dist/cur_tokens)
             distance += cur_dist
             tokens += cur_tokens
@@ -60,12 +60,22 @@ def load_wave(wave_path, sample_rate:int=16000) -> torch.Tensor:
     return wav
 
 def load_img(fn, num_img):
-    with av.open(fn, metadata_errors="ignore") as container:
-        all_frames = [frame.to_image() for frame in container.decode(video=0)]
-        mul = len(all_frames) // num_img
-        ret_frames = [torch.from_numpy(np.array(f.convert("RGB"), dtype=np.float32)) for f in all_frames[::mul][:num_img]]
-        ret_frames = torch.stack(ret_frames, dim=0)
-        ret_frames = ret_frames.permute(0, 3, 1, 2) / 255.0
+    if fn.endswith(".mkv"):
+        img_fn = fn.replace(".mkv", f"-{num_img}.pt")
+    elif fn.endswith(".mp4"):
+        img_fn = fn.replace(".mp4", f"-{num_img}.pt")
+    else:
+        raise RuntimeError(f"video_fn extension not supported: {fn}")
+    if os.path.isfile(img_fn):
+        ret_frames = torch.load(img_fn, map_location="cpu")
+    else:
+        with av.open(fn, metadata_errors="ignore") as container:
+            all_frames = [frame.to_image() for frame in container.decode(video=0)]
+            mul = len(all_frames) // num_img
+            ret_frames = [torch.from_numpy(np.array(f.convert("RGB"), dtype=np.float32)) for f in all_frames[::mul][:num_img]]
+            ret_frames = torch.stack(ret_frames, dim=0)
+            ret_frames = ret_frames.permute(0, 3, 1, 2) / 255.0
+        torch.save(ret_frames, img_fn)
     return ret_frames
 
 class VisSpeechDataset(torch.utils.data.Dataset):
