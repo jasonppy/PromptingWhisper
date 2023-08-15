@@ -32,7 +32,7 @@ class calc_metrics:
             pred = ''.join(ch for ch in pred if ch not in exclude)
             processed_preds.append(pred)
             processed_refs.append(ref) # do not process ref
-            cur_dist =editdistance.distance(pred, ref)
+            cur_dist =editdistance.distance(pred.split(" "), ref.split(" "))
             cur_tokens = len(ref.split(" "))
             wer_list.append(cur_dist/cur_tokens)
             distance += cur_dist
