@@ -128,14 +128,17 @@ if __name__ == "__main__":
             # Load scene categories from Places365.
             place_categories = np.loadtxt(args.place_txt_fn, dtype=str)
             place_texts = []
-            for place in place_categories[:, 0]:
-                place = place.split('/')[2:]
-                if len(place) > 1:
-                    place = place[1] + ' ' + place[0]
-                else:
-                    place = place[0]
-                place = place.replace('_', ' ')
-                place_texts.append(place)
+            for place in place_categories:
+                try:
+                    place = place.split('/')[2:]
+                    if len(place) > 1:
+                        place = place[1] + ' ' + place[0]
+                    else:
+                        place = place[0]
+                    place = place.replace('_', ' ')
+                    place_texts.append(place)
+                except:
+                    pass
             place_feats = get_text_feats([f'Photo of a {p}.' for p in place_texts])
             print("length of place texts: ", len(place_texts))
             with open(place_fn, "wb") as f:
